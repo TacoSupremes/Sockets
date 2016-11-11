@@ -1,0 +1,20 @@
+itemGroup.socket=Sockets
+item.soulGem.name=Soul Gem
+item.enderShard.name=Ender Shard
+
+sockets.ingot=Ingot
+sockets.dust=Dust
+sockets.ore=Ore
+sockets.contains=Currently contains
+sockets.bound=Bound to
+sockets.empty=Empty
+sockets.blank=Blank
+sockets.active=Active
+sockets.inactive=Inactive
+sockets.press=Press
+sockets.shift=Shift
+sockets.moreInfo=For more info
+sockets.health=Health
+sockets.runic=Runic
+sockets.ability=Ability
+sockets.power=Power
