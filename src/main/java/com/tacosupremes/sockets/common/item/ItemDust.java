@@ -27,8 +27,9 @@ public class ItemDust extends ItemMod {
 			if(OreDictionary.getOres("ingot" + s[i]) == null || OreDictionary.getOres("ingot" + s[i]).isEmpty())
 				continue;
 			
-			ModRecipes.recs.add(new RecHolder(OreDictionary.getOres("ingot" + s[i]).get(0), false, true, new ItemStack(this,1,i)));
-		
+			ModRecipes.recs.add(new RecHolder(OreDictionary.getOres("ingot" + s[i]).get(0), 1, new ItemStack(this,1,i)));
+			ModRecipes.recs.add(new RecHolder(new ItemStack(this, 2, i), 2, OreDictionary.getOres("ore" + s[i]).get(0)));
+			
 			LibMisc.Ores.oL.put("dust" + s[i], new ItemStack(this,1,i));
 		}
 		

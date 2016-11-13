@@ -12,6 +12,7 @@ import com.tacosupremes.sockets.common.utils.RecHolder;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -27,6 +28,9 @@ public class ModRecipes {
 	public static Map<String, ItemStack[][]> shapeless = new HashMap<String, ItemStack[][]>();
 	public static Map<String, ItemStack[][]> shaped = new HashMap<String, ItemStack[][]>();
 	public static Map<String, ItemStack> furnace = new HashMap<String, ItemStack>();
+	public static Map<String, ItemStack> grinder = new HashMap<String, ItemStack>();
+	public static Map<String, ItemStack> grinderio = new HashMap<String, ItemStack>();
+	
 	public static List<RecHolder> recs = new ArrayList<RecHolder>();
 
 	
@@ -38,6 +42,9 @@ public class ModRecipes {
 	//	addFurnaceRecipe(new ItemStack(ModBlocks.marker), new ItemStack(Blocks.TORCH),5);
 		
 		addFurnaceRecipe(new ItemStack(ModItems.soulGem,1,1), new ItemStack(Blocks.DIAMOND_BLOCK, 2, 0), 0);
+		addGrinderRecipe(new ItemStack(Blocks.COBBLESTONE), new ItemStack(Blocks.STONE));
+		addGrinderRecipe(new ItemStack(Blocks.SAND), new ItemStack(Blocks.COBBLESTONE));
+		addGrinderRecipe(new ItemStack(Items.FLINT), new ItemStack(Blocks.GRAVEL));
 		
 		
 		for(RecHolder r : recs){
@@ -45,6 +52,11 @@ public class ModRecipes {
 			if(r.isFurnace()){
 				
 				addFurnaceRecipe(r.getOut(), (ItemStack)r.getO()[0], 5);
+				continue;
+			}
+			
+			if(r.isGrinder()){
+				addGrinderRecipe(r.getOut(), (ItemStack)r.getO()[0]);
 				continue;
 			}
 			
@@ -59,6 +71,12 @@ public class ModRecipes {
 		}
 		
 		
+	}
+
+	private static void addGrinderRecipe(ItemStack out, ItemStack itemStack) {
+	
+		grinder.put(out.getUnlocalizedName(), itemStack);
+		grinderio.put(itemStack.getUnlocalizedName(), out);
 	}
 
 	private static void addShapelessRecipe(ItemStack itemStack, ItemStack... w) {

@@ -6,8 +6,7 @@ public class RecHolder {
 	
 	
 	private ItemStack out;
-	private boolean shapeless;
-	private boolean furnace;
+	int id;
 	private Object[] o;
 
 	public ItemStack getOut() {
@@ -15,21 +14,24 @@ public class RecHolder {
 	}
 
 	public boolean isShapeless() {
-		return shapeless;
+		return id == 0;
 	}
 
 	public boolean isFurnace() {
-		return furnace;
+		return id == 1;
+	}
+	
+	public boolean isGrinder() {
+		return id == 2;
 	}
 
 	public Object[] getO() {
 		return o;
 	}
 
-	public RecHolder(ItemStack stack, boolean shapeless, boolean furnace, Object... recipeComponents){
+	public RecHolder(ItemStack stack, int id, Object... recipeComponents){
 		this.out = stack;
-		this.shapeless = shapeless;
-		this.furnace = furnace;
+		this.id = id;
 		this.o = recipeComponents;
 	}
 

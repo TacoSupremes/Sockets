@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tacosupremes.sockets.common.item.socket.ItemGrindSocket;
+import com.tacosupremes.sockets.common.item.socket.ItemSmeltSocket;
 import com.tacosupremes.sockets.common.item.socket.tool.ItemSocketPickaxe;
 import com.tacosupremes.sockets.common.lib.LibMisc;
 
@@ -37,11 +38,15 @@ public class ModItems {
 	
 	public static Item grindSocket;
 	
+	public static Item smeltSocket;
+	
 	public static void preInit(){
 		
 		soulGem = new ItemSoulGem();
 		
 		grindSocket = new ItemGrindSocket();
+		
+		smeltSocket = new ItemSmeltSocket();
 		
 		socketPick = new ItemSocketPickaxe();
 		//builderScroll = new ItemBuilderScroll();

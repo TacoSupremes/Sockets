@@ -1,10 +1,15 @@
 package com.tacosupremes.sockets.common.item.socket.tool;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.tacosupremes.sockets.Sockets;
 import com.tacosupremes.sockets.common.item.ModItems;
 import com.tacosupremes.sockets.common.item.socket.ItemSocket;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -28,20 +33,60 @@ public class ItemSocketPickaxe extends ItemPickaxe{
 	@Override
 	public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer player) {
 		
-	ItemSocket i = ItemSocket.getSocket(itemstack, 1);
+		World w = player.getEntityWorld();
+		if(!itemstack.hasTagCompound())
+			return false;
+		
+		List<ItemStack> result = ItemSocket.getSockets(itemstack).get(0).getTarget(w, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, itemstack));
+		
+	for(ItemSocket i : ItemSocket.getSockets(itemstack)){
+		List<ItemStack> result2 = new ArrayList<ItemStack>();
+		
+		
+		for(ItemStack is : result){
+			
+			
+			if(is == null)
+				continue;
+			
+			ItemStack r = i.affectItem(is.copy());
+			
+			System.out.println(r == null ? "NULL" : r.getDisplayName());
+			if(r != null){
+				result2.add(r.copy());
+				System.out.println("R ADDED");
+			}
+		}
+		
+		result = new ArrayList<ItemStack>();
+		result.addAll(result2);
+		
+	}
 	
-	if(i != null)
-		i.onBlockStartBreak(itemstack, pos, player);
+	if(!result.isEmpty()){
+		
+		if(!w.isRemote){
+					
+			w.setBlockToAir(pos);
+			for(ItemStack is : result){
+			w.getBlockState(pos).getBlock().spawnAsEntity(w, pos, is.copy());
+		}
+	}
+		
+		
+		return true;
+	}
+	
 	
 		
-		return super.onBlockStartBreak(itemstack, pos, player);
+		return false;
 	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn,
 			EnumHand hand) {
-		
 		ItemSocket.setSocket(itemStackIn, (ItemSocket)ModItems.grindSocket, 1);
+		ItemSocket.setSocket(itemStackIn, (ItemSocket)ModItems.smeltSocket, 2);
 		return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
 	}
 	
