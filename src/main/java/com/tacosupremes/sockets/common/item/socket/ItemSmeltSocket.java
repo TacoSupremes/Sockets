@@ -1,5 +1,8 @@
 package com.tacosupremes.sockets.common.item.socket;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.tacosupremes.sockets.common.lib.LibMisc;
 import com.tacosupremes.sockets.common.utils.BlockUtils;
 
@@ -63,5 +66,12 @@ public class ItemSmeltSocket extends ItemSocket {
 		return 3;
 	}
 	
+public List<ItemStack> getTarget(World w, BlockPos pos, int fortune){
+		
+	
+		
+		return Arrays.asList(new ItemStack[]{BlockUtils.toItemStack(w.getBlockState(pos))});
+		
+	}
 
 }

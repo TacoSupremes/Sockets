@@ -39,6 +39,7 @@ public class ItemSocketPickaxe extends ItemPickaxe{
 		
 		List<ItemStack> result = ItemSocket.getSockets(itemstack).get(0).getTarget(w, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, itemstack));
 		
+		boolean workDone = false;
 	for(ItemSocket i : ItemSocket.getSockets(itemstack)){
 		List<ItemStack> result2 = new ArrayList<ItemStack>();
 		
@@ -55,29 +56,30 @@ public class ItemSocketPickaxe extends ItemPickaxe{
 			if(r != null){
 				result2.add(r.copy());
 				System.out.println("R ADDED");
-			}
+				workDone = true;
+			}else
+				result2.add(is.copy());
 		}
 		
 		result = new ArrayList<ItemStack>();
 		result.addAll(result2);
 		
 	}
+	boolean ff = ItemStack.areItemsEqual(result.get(0), ItemSocket.getSockets(itemstack).get(0).getTarget(w, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, itemstack)).get(0));
 	
-	if(!result.isEmpty()){
+	if(workDone){
 		
 		if(!w.isRemote){
 					
 			w.setBlockToAir(pos);
-			for(ItemStack is : result){
+			
+			for(ItemStack is : result)
 			w.getBlockState(pos).getBlock().spawnAsEntity(w, pos, is.copy());
-		}
+		
 	}
-		
-		
+			
 		return true;
 	}
-	
-	
 		
 		return false;
 	}
