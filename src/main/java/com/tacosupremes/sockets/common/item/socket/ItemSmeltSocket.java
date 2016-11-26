@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -53,7 +54,7 @@ public class ItemSmeltSocket extends ItemSocket {
 
 	@Override
 	public ItemStack affectItem(ItemStack is) {
-		// TODO Auto-generated method stub
+		
 		ItemStack r = FurnaceRecipes.instance().getSmeltingResult(is);
 		
 		return r != null ? new ItemStack(r.getItem(),is.stackSize,r.getItemDamage()) : null;
@@ -62,7 +63,7 @@ public class ItemSmeltSocket extends ItemSocket {
 
 	@Override
 	public int getPriority() {
-		// TODO Auto-generated method stub
+	
 		return 3;
 	}
 	
@@ -70,8 +71,15 @@ public List<ItemStack> getTarget(World w, BlockPos pos, int fortune){
 		
 	
 		
-		return Arrays.asList(new ItemStack[]{BlockUtils.toItemStack(w.getBlockState(pos))});
+		return w.getBlockState(pos).getBlock().getDrops(w, pos, w.getBlockState(pos), 0);
 		
 	}
+
+
+@Override
+public EnumParticleTypes getParticle() {
+	
+	return EnumParticleTypes.FLAME;
+}
 
 }

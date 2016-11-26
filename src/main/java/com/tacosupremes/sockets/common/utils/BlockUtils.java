@@ -334,6 +334,13 @@ public static int getMeta(World w, BlockPos pos){
 
   }
   
- 
+  public static void fillBlock(World w, BlockPos pos,  EnumParticleTypes type){
+	  
+	  for(int i = 0; i<=40; i++){
+		  
+		  w.spawnParticle(type, pos.getX() + 0.5D + Math.random()-Math.random(), pos.getY() + 0.5D+Math.random()-Math.random(), pos.getZ() + 0.5D + Math.random()-Math.random(), 0, 0, 0, 0);
+	  }
+	  
+  } 
 
 }

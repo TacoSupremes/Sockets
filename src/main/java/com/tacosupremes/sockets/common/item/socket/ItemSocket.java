@@ -8,6 +8,7 @@ import com.tacosupremes.sockets.common.item.ItemMod;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -67,11 +68,11 @@ public abstract class ItemSocket extends ItemMod {
 	}
 	
 	
-public static boolean addSocket(ItemStack is, ItemSocket s, int slot){
+public static boolean addSocket(ItemStack is, ItemSocket s){
 		
 	
 		
-		for(int i = 0; i<=3;i++){
+		for(int i = 1; i<=3;i++){
 			
 		
 		if(setSocket(is,s,i))
@@ -85,6 +86,8 @@ public static boolean addSocket(ItemStack is, ItemSocket s, int slot){
 
 public static boolean hasSocket(ItemStack is, ItemSocket socket){
 	
+	if(!is.hasTagCompound())
+		return false;
 	
 	for(int i = 1; i<=3;i++){
 		
@@ -157,6 +160,7 @@ public List<ItemStack> getTarget(World w, BlockPos pos, int fortune){
 
 public abstract ItemStack affectItem(ItemStack is);
 
+public abstract EnumParticleTypes getParticle();
 	
 	public enum SocketType {
 		

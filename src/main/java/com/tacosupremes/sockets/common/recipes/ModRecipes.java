@@ -8,6 +8,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 import com.tacosupremes.sockets.common.block.ModBlocks;
 import com.tacosupremes.sockets.common.item.ModItems;
+import com.tacosupremes.sockets.common.item.socket.SocketComboRecipe;
 import com.tacosupremes.sockets.common.utils.RecHolder;
 
 import net.minecraft.block.Block;
@@ -45,7 +46,7 @@ public class ModRecipes {
 		addGrinderRecipe(new ItemStack(Blocks.COBBLESTONE), new ItemStack(Blocks.STONE));
 		addGrinderRecipe(new ItemStack(Blocks.SAND), new ItemStack(Blocks.COBBLESTONE));
 		addGrinderRecipe(new ItemStack(Items.FLINT), new ItemStack(Blocks.GRAVEL));
-		
+		GameRegistry.addRecipe(new SocketComboRecipe());
 		
 		for(RecHolder r : recs){
 			

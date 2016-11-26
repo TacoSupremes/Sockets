@@ -15,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -27,21 +28,8 @@ public class ItemGrindSocket extends ItemSocket {
 		
 	}
 
-	
-
-
-
-
-	
-
-
-
-
-
-
 	@Override
 	public ItemStack affectItem(ItemStack is) {
-	
 		
 		ItemStack r = ModRecipes.grinderio.get(is.getUnlocalizedName());
 		
@@ -50,15 +38,8 @@ public class ItemGrindSocket extends ItemSocket {
 		
 	}
 
-
-
-
-
-
 	public List<ItemStack> getTarget(World w, BlockPos pos, int fortune){
-		
-	
-		
+			
 		return Arrays.asList(new ItemStack[]{BlockUtils.toItemStack(w.getBlockState(pos))});
 		
 	}
@@ -71,8 +52,16 @@ public class ItemGrindSocket extends ItemSocket {
 
 	@Override
 	public int getPriority() {
-		// TODO Auto-generated method stub
+	
 		return 1;
+	}
+
+
+
+	@Override
+	public EnumParticleTypes getParticle() {
+		
+		return EnumParticleTypes.EXPLOSION_NORMAL;
 	}
 	
 	

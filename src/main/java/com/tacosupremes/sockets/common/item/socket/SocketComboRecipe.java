@@ -9,14 +9,72 @@ public class SocketComboRecipe implements IRecipe {
 
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		boolean foundSocketItem = false;
+		boolean foundSocket = false;
+		
+		for(int i = 0; i<inv.getSizeInventory();i++){
+			ItemStack is = inv.getStackInSlot(i);
+			
+			if(is == null)
+				continue;
+			
+			if(is.getItem() instanceof ItemSocket){
+				
+				if(!foundSocket)
+					foundSocket = true;
+				else
+					return false;
+			}
+			
+			
+			if(is.getItem() instanceof ISocketable){
+				
+				if(!foundSocketItem)
+					foundSocketItem = true;
+				else
+					return false;
+				continue;
+			}
+			
+			
+		}
+		
+		return foundSocket && foundSocketItem;
 	}
 
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		ItemStack socketItem = null;
+		ItemStack socket = null;
+		
+		for(int i = 0; i<inv.getSizeInventory();i++){
+			ItemStack is = inv.getStackInSlot(i);
+			
+			if(is == null)
+				continue;
+			
+			if(is.getItem() instanceof ItemSocket){
+				
+				socket = is;
+			}
+			
+		
+			
+			if(is.getItem() instanceof ISocketable){
+				
+				socketItem = is;
+			}
+			
+			if(socketItem != null && socket != null)
+				break;
+		}
+	
+		
+		ItemSocket.addSocket(socketItem, (ItemSocket)socket.getItem());
+		
+		return socketItem;
 	}
 
 	@Override
@@ -33,8 +91,8 @@ public class SocketComboRecipe implements IRecipe {
 
 	@Override
 	public ItemStack[] getRemainingItems(InventoryCrafting inv) {
-		// TODO Auto-generated method stub
-		return null;
+		inv.clear();
+		return new ItemStack[inv.getSizeInventory()];
 	}
 
 }
