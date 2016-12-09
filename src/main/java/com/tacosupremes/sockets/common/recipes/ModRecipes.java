@@ -46,6 +46,7 @@ public class ModRecipes {
 		addGrinderRecipe(new ItemStack(Blocks.COBBLESTONE), new ItemStack(Blocks.STONE));
 		addGrinderRecipe(new ItemStack(Blocks.SAND), new ItemStack(Blocks.COBBLESTONE));
 		addGrinderRecipe(new ItemStack(Items.FLINT), new ItemStack(Blocks.GRAVEL));
+		addGrinderRecipe(new ItemStack(Items.COAL, 8), new ItemStack(Blocks.COAL_ORE));
 		GameRegistry.addRecipe(new SocketComboRecipe());
 		
 		for(RecHolder r : recs){

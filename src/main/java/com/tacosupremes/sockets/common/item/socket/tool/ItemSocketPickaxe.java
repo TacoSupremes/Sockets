@@ -46,7 +46,7 @@ public class ItemSocketPickaxe extends ItemPickaxe implements ISocketable{
 			return false;
 		List<ItemStack> result = ItemSocket.getSockets(itemstack).get(0).getTarget(w, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, itemstack));
 		
-		//boolean workDone = false;
+		
 		List<ItemSocket> us = new ArrayList<ItemSocket>();
 	for(ItemSocket i : ItemSocket.getSockets(itemstack)){
 		List<ItemStack> result2 = new ArrayList<ItemStack>();
@@ -75,9 +75,7 @@ public class ItemSocketPickaxe extends ItemPickaxe implements ISocketable{
 		
 	}
 	
-//	if(result.isEmpty())
-//		return false;
-	
+
 	
 	boolean ff = ItemStack.areItemsEqual(result.get(0), ItemSocket.getSockets(itemstack).get(0).getTarget(w, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, itemstack)).get(0));
 	
