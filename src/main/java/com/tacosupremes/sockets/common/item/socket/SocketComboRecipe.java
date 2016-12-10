@@ -1,5 +1,8 @@
 package com.tacosupremes.sockets.common.item.socket;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -10,10 +13,12 @@ public class SocketComboRecipe implements IRecipe {
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn) {
 		
-		boolean foundSocketItem = false;
-		boolean foundSocket = false;
+		ItemStack sI = null;
+		
+		List<ItemSocket> s = new ArrayList<ItemSocket>();
 		
 		for(int i = 0; i<inv.getSizeInventory();i++){
+			
 			ItemStack is = inv.getStackInSlot(i);
 			
 			if(is == null)
@@ -21,8 +26,8 @@ public class SocketComboRecipe implements IRecipe {
 			
 			if(is.getItem() instanceof ItemSocket){
 				
-				if(!foundSocket)
-					foundSocket = true;
+				if(s.size() < 3)
+					s.add((ItemSocket)is.getItem());
 				else
 					return false;
 			}
@@ -30,8 +35,8 @@ public class SocketComboRecipe implements IRecipe {
 			
 			if(is.getItem() instanceof ISocketable){
 				
-				if(!foundSocketItem)
-					foundSocketItem = true;
+				if(sI == null)	
+					sI = is;
 				else
 					return false;
 				continue;
@@ -40,58 +45,76 @@ public class SocketComboRecipe implements IRecipe {
 			
 		}
 		
-		return foundSocket && foundSocketItem;
+		if(sI != null && !s.isEmpty()){
+			
+			if(ItemSocket.getSockets(sI).size() + s.size() > 3)
+				return false;
+			
+			if(!ItemSocket.areSocketsCompatible(s))
+				return false;
+			
+			List<ItemSocket> ss = new ArrayList<ItemSocket>();
+			
+			ss.addAll(s);
+			
+			ss.addAll(ItemSocket.getSockets(sI));
+				
+			if(!ItemSocket.areSocketsCompatible(ss))
+				return false;
+			
+			
+			return true;
+		}
+		
+		return false;
 	}
 
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
 		
-		ItemStack socketItem = null;
-		ItemStack socket = null;
+		ItemStack sI = null;
+		
+		List<ItemSocket> s = new ArrayList<ItemSocket>();
 		
 		for(int i = 0; i<inv.getSizeInventory();i++){
+			
 			ItemStack is = inv.getStackInSlot(i);
 			
 			if(is == null)
 				continue;
 			
-			if(is.getItem() instanceof ItemSocket){
-				
-				socket = is;
-			}
+			if(is.getItem() instanceof ItemSocket)
+				s.add((ItemSocket)is.getItem());
 			
+			
+			
+			if(is.getItem() instanceof ISocketable)
+				sI = is;
 		
-			
-			if(is.getItem() instanceof ISocketable){
-				
-				socketItem = is;
-			}
-			
-			if(socketItem != null && socket != null)
-				break;
 		}
-	
 		
-		ItemSocket.addSocket(socketItem, (ItemSocket)socket.getItem());
+		ItemStack is2 = sI.copy();
 		
-		return socketItem;
+		ItemSocket.addSockets(is2, s);
+		
+		return is2;
 	}
 
 	@Override
 	public int getRecipeSize() {
-		// TODO Auto-generated method stub
+		
 		return 9;
 	}
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public ItemStack[] getRemainingItems(InventoryCrafting inv) {
-		inv.clear();
+		inv.clear(); //TODO DECREASE USED STACKS TO PREVENT DESTRUCTION OF UNUSED ITEM EX HAVING STACK OF 3SOCKETS IN BENCH 
 		return new ItemStack[inv.getSizeInventory()];
 	}
 

@@ -73,7 +73,9 @@ public abstract class ItemSocket extends ItemMod {
 public static boolean addSocket(ItemStack is, ItemSocket s){
 		
 	
-		
+	if(hasSocket(is,s))
+		return false;
+	
 		for(int i = 1; i<=3;i++){
 			
 		
@@ -194,6 +196,58 @@ public static List<ItemSocket> getSocketsEX(ItemStack is, SocketType t){
 	
 	return l2;
 }
+
+public static boolean areSocketsCompatible(List<ItemSocket> l){
+	
+	if(l.size() == 1)
+		return true;
+	
+	for(int i = 0; i < l.size(); i++){
+		
+		ItemSocket socket1 = l.get(i);
+		
+		for(int i2 = 0; i2 < l.size(); i2++){
+		
+			ItemSocket socket2 = l.get(i2);
+			
+			if(i == i2)
+				continue;
+			
+			if(socket1.getPriority() == socket2.getPriority())
+				return false;
+			
+		}
+		
+	}
+	
+	
+	return true;
+}
+
+public static boolean addSockets(ItemStack is, List<ItemSocket> s) {
+	
+	if(!areSocketsCompatible(s))
+		return false;
+	
+	List<ItemSocket> ss = new ArrayList<ItemSocket>();
+	
+	ss.addAll(s);
+	
+	ss.addAll(ItemSocket.getSockets(is));
+		
+	if(!ItemSocket.areSocketsCompatible(ss))
+		return false;
+	
+	for(ItemSocket i : s){
+		
+		addSocket(is, i);
+	}
+	
+	return true;
+	
+}
+
+
 public int getPriority(){
 	return 0;
 }
@@ -229,4 +283,5 @@ public abstract EnumParticleTypes getParticle();
 		Item, Block, Armor
 	}
 
+	
 }
