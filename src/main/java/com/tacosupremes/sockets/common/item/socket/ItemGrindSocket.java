@@ -53,7 +53,7 @@ public class ItemGrindSocket extends ItemSocket {
 	@Override
 	public int getPriority() {
 	
-		return 1;
+		return 3;
 	}
 
 

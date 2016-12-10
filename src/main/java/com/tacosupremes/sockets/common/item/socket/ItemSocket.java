@@ -1,10 +1,12 @@
 package com.tacosupremes.sockets.common.item.socket;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.tacosupremes.sockets.common.item.ItemMod;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -145,7 +147,53 @@ public static List<ItemSocket> getSockets(ItemStack is){
 	return l2;
 }
 
-
+public static List<ItemSocket> getSocketsEX(ItemStack is, SocketType t){
+	
+	List<ItemSocket> l = new ArrayList<ItemSocket>();
+	
+	if(!is.hasTagCompound())
+		return l;
+	
+	for(int i=1;i<=3;i++){
+		
+		
+		if(is.getTagCompound().hasKey("S"+i))
+			l.add((ItemSocket)Item.getItemById(is.getTagCompound().getInteger("S"+i)));
+		
+		
+	}
+	
+	List<ItemSocket> l2 = new ArrayList<ItemSocket>();
+	
+	
+	
+	while (!l.isEmpty()){
+		
+		int lp = 1000;
+		int li = 0;
+		
+	for(int i=0;i<l.size();i++){
+		ItemSocket so = l.get(i);
+		
+		if(so.getPriority() < lp && so.getType() != t){
+			li = i;
+			lp = so.getPriority();
+		}
+	}
+	
+	l2.add(l.get(li));
+	l.remove(li);
+	
+	if(l.size() == 1 && l.get(0).getType() == t)
+		l2.add(l.get(0));
+	
+	}
+	
+	
+	
+	
+	return l2;
+}
 public int getPriority(){
 	return 0;
 }
@@ -158,7 +206,18 @@ public List<ItemStack> getTarget(World w, BlockPos pos, int fortune){
 }
 
 
+public List<BlockPos> getBlocks(World w, BlockPos pos, EntityPlayer player){
+	
+	
+	return Arrays.asList(pos);
+	
+}
 
+
+
+public SocketType getType() {
+	return Type;
+}
 
 
 public abstract ItemStack affectItem(ItemStack is);

@@ -64,7 +64,7 @@ public class ItemSmeltSocket extends ItemSocket {
 	@Override
 	public int getPriority() {
 	
-		return 3;
+		return 5;
 	}
 	
 public List<ItemStack> getTarget(World w, BlockPos pos, int fortune){

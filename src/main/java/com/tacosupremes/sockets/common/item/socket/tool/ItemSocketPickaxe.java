@@ -7,6 +7,7 @@ import com.tacosupremes.sockets.Sockets;
 import com.tacosupremes.sockets.common.item.ModItems;
 import com.tacosupremes.sockets.common.item.socket.ISocketable;
 import com.tacosupremes.sockets.common.item.socket.ItemSocket;
+import com.tacosupremes.sockets.common.item.socket.ItemSocket.SocketType;
 import com.tacosupremes.sockets.common.utils.BlockUtils;
 
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -33,24 +34,39 @@ public class ItemSocketPickaxe extends ItemPickaxe implements ISocketable{
 	}
 
 	@Override
-	public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer player) {
+	public boolean onBlockStartBreak(ItemStack itemstack, BlockPos opos, EntityPlayer player) {
 		
 		World w = player.getEntityWorld();
 		if(!itemstack.hasTagCompound())
 			return false;
 		
-		if(w.getBlockState(pos).getBlock().getDrops(w, pos, w.getBlockState(pos), 0).isEmpty())
+		if(w.getBlockState(opos).getBlock().getDrops(w, opos, w.getBlockState(opos), 0).isEmpty())
 			return false;
 		
 		if(ItemSocket.getSockets(itemstack).isEmpty())
 			return false;
-		List<ItemStack> result = ItemSocket.getSockets(itemstack).get(0).getTarget(w, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, itemstack));
+		
+		if(ItemSocket.getSockets(itemstack).get(0).getBlocks(w, opos, player).isEmpty())
+			return false;
+		
+		if(this.getStrVsBlock(itemstack, w.getBlockState(opos))!= this.efficiencyOnProperMaterial)
+			return false;
+		
+		for(BlockPos pos : ItemSocket.getSockets(itemstack).get(0).getBlocks(w, opos, player)){
+		
+			if(this.getStrVsBlock(itemstack, w.getBlockState(pos)) != this.efficiencyOnProperMaterial)
+				continue;
+		List<ItemStack> result = ItemSocket.getSocketsEX(itemstack, SocketType.Block).get(0).getTarget(w, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, itemstack));
 		
 		
 		List<ItemSocket> us = new ArrayList<ItemSocket>();
 	for(ItemSocket i : ItemSocket.getSockets(itemstack)){
 		List<ItemStack> result2 = new ArrayList<ItemStack>();
 		
+		if(i.getType() == SocketType.Block){
+			us.add(null);
+			continue;
+		}
 		
 		for(ItemStack is : result){
 			
@@ -77,11 +93,12 @@ public class ItemSocketPickaxe extends ItemPickaxe implements ISocketable{
 	
 
 	
-	boolean ff = ItemStack.areItemsEqual(result.get(0), ItemSocket.getSockets(itemstack).get(0).getTarget(w, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, itemstack)).get(0));
+//	boolean ff = ItemStack.areItemsEqual(result.get(0), ItemSocket.getSockets(itemstack).get(0).getTarget(w, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, itemstack)).get(0));
 	
 	if(!us.isEmpty()){
 		
 		for(ItemSocket i : us){
+			if(i!= null)
 			BlockUtils.fillBlock(w, pos, i.getParticle());
 		}
 		
@@ -94,8 +111,10 @@ public class ItemSocketPickaxe extends ItemPickaxe implements ISocketable{
 				w.getBlockState(pos).getBlock().spawnAsEntity(w, pos, is.copy());
 			}
 	}
-			
-		return true;
+	
+		
+	}
+	//	return true;
 	}
 		
 		return false;

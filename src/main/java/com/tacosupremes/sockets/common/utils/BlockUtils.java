@@ -5,11 +5,16 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class BlockUtils {
@@ -341,6 +346,74 @@ public static int getMeta(World w, BlockPos pos){
 		  w.spawnParticle(type, pos.getX() + 0.5D + Math.random()-Math.random(), pos.getY() + 0.5D+Math.random()-Math.random(), pos.getZ() + 0.5D + Math.random()-Math.random(), 0, 0, 0, 0);
 	  }
 	  
-  } 
+  }
+  
+  public static RayTraceResult rayTrace(World worldIn, EntityPlayer playerIn, boolean useLiquids, double r)
+  {
+      float f = playerIn.rotationPitch;
+      float f1 = playerIn.rotationYaw;
+      double d0 = playerIn.posX;
+      double d1 = playerIn.posY + (double)playerIn.getEyeHeight();
+      double d2 = playerIn.posZ;
+      Vec3d vec3d = new Vec3d(d0, d1, d2);
+      float f2 = MathHelper.cos(-f1 * 0.017453292F - (float)Math.PI);
+      float f3 = MathHelper.sin(-f1 * 0.017453292F - (float)Math.PI);
+      float f4 = -MathHelper.cos(-f * 0.017453292F);
+      float f5 = MathHelper.sin(-f * 0.017453292F);
+      float f6 = f3 * f4;
+      float f7 = f2 * f4;
+      double d3 = r;
+      Vec3d vec3d1 = vec3d.addVector((double)f6 * d3, (double)f5 * d3, (double)f7 * d3);
+      return worldIn.rayTraceBlocks(vec3d, vec3d1, useLiquids, !useLiquids, false);
+  }
+
+
+public static RayTraceResult rayTrace2(World worldIn, EntityPlayer playerIn, double r)
+  {
+      float f = playerIn.rotationPitch;
+      float f1 = playerIn.rotationYaw;
+      double d0 = playerIn.posX;
+      double d1 = playerIn.posY + (double)playerIn.getEyeHeight();
+      double d2 = playerIn.posZ;
+      Vec3d vec3d = new Vec3d(d0, d1, d2);
+      float f2 = MathHelper.cos(-f1 * 0.017453292F - (float)Math.PI);
+      float f3 = MathHelper.sin(-f1 * 0.017453292F - (float)Math.PI);
+      float f4 = -MathHelper.cos(-f * 0.017453292F);
+      float f5 = MathHelper.sin(-f * 0.017453292F);
+      float f6 = f3 * f4;
+      float f7 = f2 * f4;
+      double d3 = r;
+      Vec3d vec3d1 = vec3d.addVector((double)f6 * d3, (double)f5 * d3, (double)f7 * d3);
+      return worldIn.rayTraceBlocks(vec3d, vec3d1, false, true, false);
+  }
+
+
+public static Entity rayTraceEntity(World w, EntityPlayer player, int r2){
+	 
+	 RayTraceResult r = rayTrace2(w, player, r2);
+	 
+	 if(r == null)
+		 return null;
+	 
+	 List<Entity> e2 =	w.getEntitiesWithinAABBExcludingEntity(player, new AxisAlignedBB(player.getPosition(), r.getBlockPos()).expand(1, 1, 1));
+	 
+	 if(e2.isEmpty())
+		 return null;
+	 
+	 float d = -1;
+	 int in = -1;
+	 
+	 for(int i = 0; i<e2.size(); i++){
+		 
+		 if(e2.get(i).getDistanceToEntity(player) < d || d == -1){
+			 in = i;
+			 d = e2.get(i).getDistanceToEntity(player);
+		 }
+	 }
+	 
+	 return e2.get(in);
+}
+
+
 
 }
