@@ -1,5 +1,6 @@
 package com.tacosupremes.sockets.common.lib;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,52 +29,54 @@ public class LibMisc {
 	
 	public static Map<String, ItemStack> oL = new HashMap<String, ItemStack>();
 	
+	public static Map<String, Color> oC = new HashMap<String, Color>();
+	
 	public static void preInit(){
 		
 		//Stolen From Botania
-				addOre("oreAluminum"); // Tinkers' Construct
-				addOre("oreAmber"); // Thaumcraft
-				addOre("oreApatite"); // Forestry
-				addOre("oreBlueTopaz"); // Ars Magica
-				addOre("oreCertusQuartz"); // Applied Energistics
-				addOre("oreChimerite"); // Ars Magica
-				addOre("oreCinnabar"); // Thaumcraft
-				addOre("oreCoal"); // Vanilla
-				addOre("oreCopper"); // IC2, Thermal Expansion, Tinkers' Construct, etc.
-				addOre("oreDark"); // EvilCraft
-				addOre("oreDarkIron"); // Factorization (older versions)
-				addOre("oreFzDarkIron"); // Factorization (newer versions)
-				addOre("oreDiamond"); // Vanilla
-				addOre("oreEmerald"); // Vanilla
-				addOre("oreGalena"); // Factorization
-				addOre("oreGold"); // Vanilla
-				addOre("oreInfusedAir"); // Thaumcraft
-				addOre("oreInfusedEarth"); // Thaumcraft
-				addOre("oreInfusedEntropy"); // Thaumcraft
-				addOre("oreInfusedFire"); // Thaumcraft
-				addOre("oreInfusedOrder"); // Thaumcraft
-				addOre("oreInfusedWater"); // Thaumcraft
-				addOre("oreIron"); // Vanilla
-				addOre("oreLapis"); // Vanilla
-				addOre("oreLead"); // IC2, Thermal Expansion, Factorization, etc.
-				addOre("oreMCropsEssence"); // Magical Crops
-				addOre("oreMithril"); // Thermal Expansion
-				addOre("oreNickel"); // Thermal Expansion
-				addOre("oreOlivine"); // Project RED
-				addOre("orePlatinum"); // Thermal Expansion
-				addOre("oreRedstone"); // Vanilla
-				addOre("oreRuby"); // Project RED
-				addOre("oreSapphire"); // Project RED
-				addOre("oreSilver"); // Thermal Expansion, Factorization, etc.
-				addOre("oreSulfur"); // Railcraft
-				addOre("oreTin"); // IC2, Thermal Expansion, etc.
-				addOre("oreUranium"); // IC2
-				addOre("oreVinteum"); // Ars Magica
-				addOre("oreYellorite"); // Big Reactors
-				addOre("oreZinc"); // Flaxbeard's Steam Power
-				addOre("oreMythril"); // Simple Ores2
-				addOre("oreAdamantium"); // Simple Ores2
-				addOre("oreTungsten"); // Simple Tungsten
+				addOre("oreAluminum", Color.lightGray); // Tinkers' Construct
+				addOre("oreAmber", Color.orange); // Thaumcraft
+				addOre("oreApatite", Color.blue); // Forestry
+				addOre("oreBlueTopaz", Color.BLUE); // Ars Magica
+				addOre("oreCertusQuartz", Color.blue); // Applied Energistics
+				addOre("oreChimerite",Color.ORANGE); // Ars Magica
+				addOre("oreCinnabar", Color.red); // Thaumcraft
+				addOre("oreCoal", Color.black); // Vanilla
+				addOre("oreCopper", Color.orange); // IC2, Thermal Expansion, Tinkers' Construct, etc.
+				addOre("oreDark", Color.BLACK); // EvilCraft
+				addOre("oreDarkIron", Color.black); // Factorization (older versions)
+				addOre("oreFzDarkIron", Color.black); // Factorization (newer versions)
+				addOre("oreDiamond", Color.BLUE); // Vanilla
+				addOre("oreEmerald", Color.GREEN); // Vanilla
+				addOre("oreGalena", Color.green); // Factorization
+				addOre("oreGold", Color.YELLOW); // Vanilla
+				addOre("oreInfusedAir", Color.yellow); // Thaumcraft
+				addOre("oreInfusedEarth", Color.red); // Thaumcraft
+				addOre("oreInfusedEntropy", Color.black); // Thaumcraft
+				addOre("oreInfusedFire", Color.red); // Thaumcraft
+				addOre("oreInfusedOrder", Color.white); // Thaumcraft
+				addOre("oreInfusedWater", Color.cyan); // Thaumcraft
+				addOre("oreIron", Color.gray); // Vanilla
+				addOre("oreLapis", Color.BLUE); // Vanilla
+				addOre("oreLead", Color.DARK_GRAY); // IC2, Thermal Expansion, Factorization, etc.
+				addOre("oreMCropsEssence", Color.GREEN); // Magical Crops
+				addOre("oreMithril", Color.MAGENTA); // Thermal Expansion
+				addOre("oreNickel", Color.LIGHT_GRAY); // Thermal Expansion
+				addOre("oreOlivine", Color.GREEN); // Project RED
+				addOre("orePlatinum", Color.cyan); // Thermal Expansion
+				addOre("oreRedstone", Color.RED); // Vanilla
+				addOre("oreRuby", Color.RED); // Project RED
+				addOre("oreSapphire", Color.BLUE); // Project RED
+				addOre("oreSilver", Color.LIGHT_GRAY); // Thermal Expansion, Factorization, etc.
+				addOre("oreSulfur",  Color.YELLOW); // Railcraft
+				addOre("oreTin",  Color.gray); // IC2, Thermal Expansion, etc.
+				addOre("oreUranium",  Color.green); // IC2
+				addOre("oreVinteum",  Color.blue); // Ars Magica
+				addOre("oreYellorite",  Color.yellow); // Big Reactors
+				addOre("oreZinc", Color.blue); // Flaxbeard's Steam Power
+				addOre("oreMythril",  Color.RED); // Simple Ores2
+				addOre("oreAdamantium" , Color.RED); // Simple Ores2
+				addOre("oreTungsten", Color.black); // Simple Tungsten
 		
 	}
 	
@@ -112,9 +115,10 @@ public class LibMisc {
 		
 	}
 
-	public static void addOre(String s){
+	public static void addOre(String s, Color c){
 		ores.add(s);
 		oreName.add(s.substring(3));
+		oC.put(s, c);
 	}
 	
 	public static boolean isOre(IBlockState b){
@@ -224,6 +228,12 @@ public ItemStack getOtherForms(ItemStack i){
 	
 	
 	return null;
+	
+}
+/**From Ore to Color **/
+public static Color getColor(String s){
+	
+	return oC.get(s);
 	
 }
 

@@ -16,13 +16,11 @@ public class ModBlocks {
 	
 	public static Block marker;
 
-	public static Block furnaceBooster;
-	
-	public static Block grinder;
+	public static Block socketHolder;
 	
 	public static void preInit(){
 	
-		
+		socketHolder = new BlockSocketHolder();
 	}
 	
 	public static void registerRenders(){

@@ -1,5 +1,6 @@
 package com.tacosupremes.sockets.common.item.socket;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,8 +10,11 @@ import com.tacosupremes.sockets.common.utils.BlockUtils;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,6 +24,7 @@ public class ItemSmeltSocket extends ItemSocket {
 	public ItemSmeltSocket() {
 		super("smeltSocket", SocketType.Item);
 	
+		//TODO:NAME LAVA CRYSTAL
 	}
 	
 
@@ -57,7 +62,7 @@ public class ItemSmeltSocket extends ItemSocket {
 		
 		ItemStack r = FurnaceRecipes.instance().getSmeltingResult(is);
 		
-		return r != null ? new ItemStack(r.getItem(),is.stackSize,r.getItemDamage()) : null;
+		return r != null ? new ItemStack(r.getItem(),is.getCount(),r.getItemDamage()) : null;
 	}
 	
 
@@ -81,5 +86,33 @@ public EnumParticleTypes getParticle() {
 	
 	return EnumParticleTypes.FLAME;
 }
+
+@Override
+public Color getSocketColor() {
+	
+	return Color.RED;
+}
+
+
+@Override
+public ItemStack getChestItem(IInventory ii) {
+
+	for(int i = 0; i<ii.getSizeInventory();i++){
+		
+		if(ii.getStackInSlot(i) != null){
+			
+			if(TileEntityFurnace.isItemFuel(ii.getStackInSlot(i))){
+				
+				return ii.getStackInSlot(i);
+			}
+			
+		}
+		
+	}
+	
+	
+	return null;
+}
+
 
 }

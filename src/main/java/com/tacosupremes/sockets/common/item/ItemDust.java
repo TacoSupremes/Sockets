@@ -1,14 +1,18 @@
 package com.tacosupremes.sockets.common.item;
 
+import java.awt.Color;
 import java.util.List;
 
+import com.tacosupremes.sockets.common.item.socket.ItemSocket;
 import com.tacosupremes.sockets.common.lib.LibMisc;
 import com.tacosupremes.sockets.common.recipes.ModRecipes;
 import com.tacosupremes.sockets.common.utils.RecHolder;
 
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -36,7 +40,7 @@ public class ItemDust extends ItemMod {
 	}
 
 	@Override
-	public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> l) {
+	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> l) {
 			
 			for(int i = 0; i<=meta; i++){
 				
@@ -52,7 +56,30 @@ public class ItemDust extends ItemMod {
 	
 		return OreDictionary.getOres("ingot" + s[stack.getItemDamage()]).isEmpty() ? "ERROR" : OreDictionary.getOres("ingot" + s[stack.getItemDamage()]).get(0).getDisplayName().replace(I18n.translateToLocal(LibMisc.MODID+"." + "ingot"), I18n.translateToLocal(LibMisc.MODID+"." + "dust"));
 	}
-
 	
+	
+	
+	
+@Override
+	public boolean skipVariants() {
+		
+		return true;
+	}
 
+public IItemColor getColor(){
+		
+		
+		return new IItemColor(){
+
+			@Override
+			public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+				
+				
+					return LibMisc.Ores.getColor(LibMisc.Ores.ores.get(stack.getItemDamage())).getRGB();
+				
+			}
+			
+		};
+	}
+		
 }

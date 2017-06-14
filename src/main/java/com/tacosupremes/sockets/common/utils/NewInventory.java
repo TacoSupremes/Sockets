@@ -74,11 +74,7 @@ import net.minecraft.util.text.ITextComponent;
 			
 		}
 
-		@Override
-		public boolean isUseableByPlayer(EntityPlayer player) {
-			
-			return false;
-		}
+		
 
 		@Override
 		public void openInventory(EntityPlayer player) {
@@ -143,6 +139,20 @@ import net.minecraft.util.text.ITextComponent;
 			
 			return null;
 			
+		}
+
+
+		@Override
+		public boolean isEmpty() {
+			
+			return false;
+		}
+
+
+		@Override
+		public boolean isUsableByPlayer(EntityPlayer player) {
+			// TODO Auto-generated method stub
+			return false;
 		}
 		
 	}

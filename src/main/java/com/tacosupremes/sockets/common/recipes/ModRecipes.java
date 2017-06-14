@@ -42,7 +42,7 @@ public class ModRecipes {
 		
 	//	addFurnaceRecipe(new ItemStack(ModBlocks.marker), new ItemStack(Blocks.TORCH),5);
 		
-		addFurnaceRecipe(new ItemStack(ModItems.soulGem,1,1), new ItemStack(Blocks.DIAMOND_BLOCK, 2, 0), 0);
+		//addFurnaceRecipe(new ItemStack(ModItems.soulGem,1,1), new ItemStack(Blocks.DIAMOND_BLOCK, 2, 0), 0);
 		addGrinderRecipe(new ItemStack(Blocks.COBBLESTONE), new ItemStack(Blocks.STONE));
 		addGrinderRecipe(new ItemStack(Blocks.SAND), new ItemStack(Blocks.COBBLESTONE));
 		addGrinderRecipe(new ItemStack(Items.FLINT), new ItemStack(Blocks.GRAVEL));

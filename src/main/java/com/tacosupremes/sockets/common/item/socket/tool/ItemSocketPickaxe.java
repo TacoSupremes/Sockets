@@ -1,5 +1,6 @@
 package com.tacosupremes.sockets.common.item.socket.tool;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import com.tacosupremes.sockets.common.item.socket.ItemSocket;
 import com.tacosupremes.sockets.common.item.socket.ItemSocket.SocketType;
 import com.tacosupremes.sockets.common.utils.BlockUtils;
 
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
@@ -118,6 +120,45 @@ public class ItemSocketPickaxe extends ItemPickaxe implements ISocketable{
 	}
 		
 		return false;
+	}
+
+public static IItemColor getColor(){
+		
+		
+		return new IItemColor(){
+
+			@Override
+			public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+				
+				if(tintIndex == 0)
+					return -1;
+				
+				List<ItemSocket> s = ItemSocket.getSockets(stack);
+				
+				if(!s.isEmpty()){
+					
+					int r = 0;
+					int g = 0;
+					int b = 0;
+					
+					for(ItemSocket is : s){
+						
+						Color c = is.getSocketColor();
+						
+						r += c.getRed();
+						g += c.getGreen();
+						b += c.getBlue();
+						
+					}
+				
+					return new Color(r / s.size(), g / s.size(), b / s.size()).getRGB();
+					
+				}else
+					return -1;
+				
+			}
+			
+		};
 	}
 		
 }

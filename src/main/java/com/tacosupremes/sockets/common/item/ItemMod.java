@@ -1,12 +1,15 @@
 package com.tacosupremes.sockets.common.item;
 
+import java.awt.Color;
 import java.util.List;
 
 import com.tacosupremes.sockets.Sockets;
 
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -16,7 +19,8 @@ public class ItemMod extends Item{
 	
 	
 	
-	public ItemMod(String s, int meta){
+	public ItemMod(String s, int meta){	
+		super();
 		this.setUnlocalizedName(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(Sockets.tab);
@@ -62,7 +66,7 @@ public class ItemMod extends Item{
 	
 	
 	@Override
-	public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> l) {
+	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> l) {
 		if(!needsDifferentNames())
 		super.getSubItems(itemIn, tab, l);
 		else{
@@ -76,6 +80,7 @@ public class ItemMod extends Item{
 			
 	}
 
+	
 
 	public boolean needsDifferentNames(){
 		
@@ -86,6 +91,12 @@ public class ItemMod extends Item{
 	public boolean skipVariants() {
 		
 		return false;
+	}
+	
+	public IItemColor getColor(){
+		
+		
+		return null;
 	}
 	
 	

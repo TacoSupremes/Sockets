@@ -29,7 +29,7 @@ public class ModItems {
 	
 	public static Item fluidGem;
 	
-	public static Item dusts;
+	public static ItemMod dusts;
 	
 	public static Item mobRepeller;
 	
@@ -45,8 +45,6 @@ public class ModItems {
 	
 	public static void preInit(){
 		
-		soulGem = new ItemSoulGem();
-		
 		grindSocket = new ItemGrindSocket();
 		
 		smeltSocket = new ItemSmeltSocket();
@@ -54,7 +52,7 @@ public class ModItems {
 		areaSocket = new ItemAreaSocket();
 		
 		socketPick = new ItemSocketPickaxe();
-		//builderScroll = new ItemBuilderScroll();
+		
 		
 	
 
@@ -69,7 +67,13 @@ public class ModItems {
 	public static void registerRenders(){
 		
 		
+		
 		for(ItemMod i : items){
+			
+			
+			if(i.getColor() != null){
+				Minecraft.getMinecraft().getItemColors().registerItemColorHandler(i.getColor(), i);
+			}
 			
 			if(i.meta !=0){
 				
@@ -103,15 +107,28 @@ public class ModItems {
 			registerItemRender(i, 0);
 		}
 		
+		for(int i = 0; i< dusts.meta; i++){
+			registerItemRenderSameModel(dusts, i);
+		}
 		
 		
+		Minecraft.getMinecraft().getItemColors().registerItemColorHandler(ItemSocketPickaxe.getColor(), socketPick);
 	}
+		
+	
 	
 	public static void registerItemRender(Item i, int meta){
 		
 		if(i == null)
 			return;
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(i, meta, new ModelResourceLocation(LibMisc.MODID+":"+i.getUnlocalizedName().substring(5)+ (meta == 0 ? "" : String.valueOf(meta)), "inventory"));
+	}
+	
+	public static void registerItemRenderSameModel(Item i, int meta){
+		
+		if(i == null)
+			return;
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(i, meta, new ModelResourceLocation(LibMisc.MODID+":"+i.getUnlocalizedName().substring(5), "inventory"));
 	}
 	
 	

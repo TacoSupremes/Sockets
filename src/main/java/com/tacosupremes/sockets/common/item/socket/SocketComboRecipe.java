@@ -3,9 +3,12 @@ package com.tacosupremes.sockets.common.item.socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tacosupremes.sockets.common.item.ModItems;
+
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
 public class SocketComboRecipe implements IRecipe {
@@ -109,13 +112,16 @@ public class SocketComboRecipe implements IRecipe {
 	@Override
 	public ItemStack getRecipeOutput() {
 		
-		return null;
+		return new ItemStack(ModItems.socketPick);
 	}
 
 	@Override
-	public ItemStack[] getRemainingItems(InventoryCrafting inv) {
-		inv.clear(); //TODO DECREASE USED STACKS TO PREVENT DESTRUCTION OF UNUSED ITEM EX HAVING STACK OF 3SOCKETS IN BENCH 
-		return new ItemStack[inv.getSizeInventory()];
+	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
+		inv.clear();
+		
+		return NonNullList.create();
 	}
+
+	
 
 }

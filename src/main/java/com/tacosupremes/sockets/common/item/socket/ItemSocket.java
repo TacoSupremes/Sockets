@@ -1,5 +1,6 @@
 package com.tacosupremes.sockets.common.item.socket;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import com.tacosupremes.sockets.common.item.ItemMod;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -114,9 +116,10 @@ public static List<ItemSocket> getSockets(ItemStack is){
 	for(int i=1;i<=3;i++){
 		
 		
-		if(is.getTagCompound().hasKey("S"+i))
+		if(is.getTagCompound().hasKey("S"+i)){
+			if(Item.getItemById(is.getTagCompound().getInteger("S"+i)) instanceof ItemSocket)
 			l.add((ItemSocket)Item.getItemById(is.getTagCompound().getInteger("S"+i)));
-		
+		}
 		
 	}
 	
@@ -277,6 +280,16 @@ public SocketType getType() {
 public abstract ItemStack affectItem(ItemStack is);
 
 public abstract EnumParticleTypes getParticle();
+
+public abstract ItemStack getChestItem(IInventory ii);
+
+public void affectChestItem(IInventory ii){
+	
+	getChestItem(ii).shrink(1);
+	
+}
+
+public abstract Color getSocketColor();
 	
 	public enum SocketType {
 		

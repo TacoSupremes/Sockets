@@ -1,11 +1,13 @@
 package com.tacosupremes.sockets.common.item.socket;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.tacosupremes.sockets.common.utils.BlockUtils;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
@@ -16,7 +18,7 @@ public class ItemAreaSocket extends ItemSocket {
 
 	public ItemAreaSocket() {
 		super("areaSocket", SocketType.Block);
-		
+		//NAME ENDER DUST
 	}
 
 	@Override
@@ -113,7 +115,17 @@ public class ItemAreaSocket extends ItemSocket {
 		return l;
 	}
 	
-	
+	@Override
+	public Color getSocketColor() {
+		
+		return Color.WHITE;
+	}
+
+	@Override
+	public ItemStack getChestItem(IInventory ii) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }

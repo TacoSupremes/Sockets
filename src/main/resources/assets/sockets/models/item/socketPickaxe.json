@@ -1,6 +1,7 @@
 {
-    "parent": "item/generated",
+    "parent": "item/handheld",
     "textures": {
-        "layer0": "sockets:items/socketPickaxe"
+        "layer0": "sockets:items/socketPickaxe1",
+	"layer1": "sockets:items/socketPickaxe"
     }
 }

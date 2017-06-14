@@ -1,5 +1,6 @@
 package com.tacosupremes.sockets.common.item.socket;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,7 +13,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.EnumParticleTypes;
@@ -24,7 +27,7 @@ public class ItemGrindSocket extends ItemSocket {
 	public ItemGrindSocket() {
 		super("grindSocket", SocketType.Item);
 		
-		
+		//TODO:NAME QUARTZ TEETH
 		
 	}
 
@@ -33,7 +36,7 @@ public class ItemGrindSocket extends ItemSocket {
 		
 		ItemStack r = ModRecipes.grinderio.get(is.getUnlocalizedName());
 		
-		return r != null ? new ItemStack(r.getItem(),r.stackSize,r.getItemDamage()) : null;
+		return r != null ? new ItemStack(r.getItem(),r.getCount(),r.getItemDamage()) : null;
 	
 		
 	}
@@ -62,6 +65,40 @@ public class ItemGrindSocket extends ItemSocket {
 	public EnumParticleTypes getParticle() {
 		
 		return EnumParticleTypes.EXPLOSION_NORMAL;
+	}
+
+	@Override
+	public Color getSocketColor() {
+		
+		return Color.YELLOW;
+	}
+
+	@Override
+	public ItemStack getChestItem(IInventory ii) {
+	
+		for(int i = 0; i<ii.getSizeInventory();i++){
+			
+			if(ii.getStackInSlot(i) != null){
+				
+				if(ii.getStackInSlot(i).getItem() instanceof ItemPickaxe){
+					
+					return ii.getStackInSlot(i);
+				}
+				
+			}
+			
+		}
+		
+		
+		return null;
+	}
+
+	@Override
+	public void affectChestItem(IInventory ii) {
+		
+		if(getChestItem(ii).attemptDamageItem(1, itemRand))
+			getChestItem(ii).shrink(1);
+		
 	}
 	
 	

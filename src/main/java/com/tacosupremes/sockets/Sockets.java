@@ -12,6 +12,7 @@ import com.tacosupremes.sockets.proxy.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -39,9 +40,6 @@ public class Sockets
     public void preInit(FMLPreInitializationEvent event)
     {
     	tab = new RTab();	
-  
-    	rand = new Random();
-    	
 
     	ModBlocks.preInit();
     	
@@ -56,7 +54,7 @@ public class Sockets
     {
     	ModItems.init();
     //	NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
-		proxy.registerRenders();
+    	proxy.registerRenders();
 		
 
     }
@@ -73,17 +71,7 @@ public class Sockets
 		
     }
     
-    public static int randInt(int max, int exclude){
-    	
-    	int i = rand.nextInt(max);
-    	
-    	while(i == exclude)
-    		i = rand.nextInt(max);
-    	
-    		
-    	
-    	return i;
-    }
+ 
     
     public class RTab extends CreativeTabs {
 
@@ -93,9 +81,9 @@ public class Sockets
 		}
 
 		@Override
-		public Item getTabIconItem() {
+		public ItemStack getTabIconItem() {
 		
-			return Item.getItemFromBlock(Blocks.OBSIDIAN);
+			return new ItemStack(Blocks.OBSIDIAN);
 		}
     	
     }

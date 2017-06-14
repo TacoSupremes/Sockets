@@ -28,7 +28,7 @@ public class InventoryHelper {
 			
 			ItemStack slot = ii.getStackInSlot(i);
 			
-			if(is == null || is.stackSize == 0)
+			if(is == null || is.getCount() == 0)
 				return;
 			
 			if(slot == null){
@@ -39,12 +39,12 @@ public class InventoryHelper {
 			
 			if(slot.areItemsEqual(is, slot)){
 				
-				if(slot.stackSize +is.stackSize <= slot.getMaxStackSize()){
-					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.stackSize+is.stackSize,slot.getItemDamage()));
+				if(slot.getCount() +is.getCount() <= slot.getMaxStackSize()){
+					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.getCount()+is.getCount(),slot.getItemDamage()));
 					break;
 				}else{
 					
-					is.splitStack(slot.getMaxStackSize()-slot.stackSize);
+					is.splitStack(slot.getMaxStackSize()-slot.getCount());
 					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.getMaxStackSize(),slot.getItemDamage()));
 					
 				}
@@ -55,7 +55,7 @@ public class InventoryHelper {
 		
 	}
 	
-public static int itemsLeft(ItemStack ism, IInventory iio){
+	public static int itemsLeft(ItemStack ism, IInventory iio){
 		
 		ItemStack is = ism.copy();
 		
@@ -66,22 +66,22 @@ public static int itemsLeft(ItemStack ism, IInventory iio){
 			
 			ItemStack slot = ii.getStackInSlot(i);
 			
-			if(is == null || is.stackSize == 0)
+			if(is == null || is.getCount() == 0 || is.isEmpty())
 				return 0;
 			
-			if(slot == null){
+			if(slot == null || slot.isEmpty()){
 				ii.setInventorySlotContents(i, is);
 				return 0;
 			}
 			
 			if(slot.areItemsEqual(is, slot)){
 				
-				if(slot.stackSize +is.stackSize <= slot.getMaxStackSize()){
-					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.stackSize + is.stackSize,slot.getItemDamage()));
+				if(slot.getCount() +is.getCount() <= slot.getMaxStackSize()){
+					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.getCount() + is.getCount(),slot.getItemDamage()));
 					return 0;
 				}else{
 					
-					is.splitStack(slot.getMaxStackSize()-slot.stackSize);
+					is.splitStack(slot.getMaxStackSize()-slot.getCount());
 					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.getMaxStackSize(),slot.getItemDamage()));
 					
 				}
@@ -90,13 +90,13 @@ public static int itemsLeft(ItemStack ism, IInventory iio){
 			}
 		}
 		
-		if(is == null || is.stackSize == 0)
+		if(is == null || is.getCount() == 0)
 			return 0;
 		
-		return is.stackSize;
+		return is.getCount();
 	}
 
-public static IInventory getInventory(World w, BlockPos bp){
+	public static IInventory getInventory(World w, BlockPos bp){
 	
 	if(w.getTileEntity(bp) == null)
 		return null;
@@ -123,20 +123,64 @@ public static IInventory getInventory(World w, BlockPos bp){
 	return (IInventory)w.getTileEntity(bp);
 }
 
-public static int countofItemStack(IInventory ii, ItemStack is){
+	public static int countofItemStack(IInventory ii, ItemStack is){
 	
 	int amount = 0;
 	
 	for(int i =0; i< ii.getSizeInventory(); i++){
 		
 		if(ItemStack.areItemsEqual(is, ii.getStackInSlot(i)))		
-			amount += ii.getStackInSlot(i).stackSize;
+			amount += ii.getStackInSlot(i).getCount();
 			
 		
 	}
 	
 	return amount;
 }
+
+	public static ItemStack insertItemNew(ItemStack is3, IInventory ii, boolean doit){
+		
+		ItemStack is = is3.copy();
+		
+		
+		
+		for(int i = 0; i<ii.getSizeInventory(); i++){
+			
+			if(ii.getStackInSlot(i).isEmpty() || ii.getStackInSlot(i) == null){
+				if(doit)
+				ii.setInventorySlotContents(i, is);
+				ii.markDirty();
+				return null;
+			}
+			
+			if(ItemStack.areItemsEqual(is, ii.getStackInSlot(i))){
+				
+				if(ii.getStackInSlot(i).getCount() + is.getCount() <= is.getMaxStackSize()){
+					
+					ItemStack is2 = is.copy();
+					is2.setCount(is.getCount() + ii.getStackInSlot(i).getCount());
+					if(doit)
+					ii.setInventorySlotContents(i, is2);
+					return null;
+				}else{
+					ItemStack is2 = is.copy();
+					is.setCount((ii.getStackInSlot(i).getCount() + is.getCount() - is.getMaxStackSize()));
+					is2.setCount(is.getMaxStackSize());
+					if(doit)
+					ii.setInventorySlotContents(i, is2);
+					
+					continue;
+					
+				}
+				
+			}
+			
+			
+		}
+		
+		
+		return is;
+	}
 
 }
 
